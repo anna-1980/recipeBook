@@ -23,24 +23,42 @@ ingredientsChanged = new EventEmitter<Ingredient[]>()
         this.ingriedients.push(ingredient);
         
         this.ingredientsChanged.emit(this.ingriedients.slice())
-//-------------------------------------------------------------//
-           
-    // this.ingriedients.push(ingredient);
-    // console.log(ingredient)
+//-----------------My LocalStorage piece----------------------------------------//
     if (this.ingredientsLocal === null  ) {
-        console.log('1' + this.ingredientsLocal);
+        // console.log('1' + this.ingredientsLocal);
         this.ingredientsLocal = [];
       } else {
         this.ingredientsLocal = JSON.parse(localStorage.getItem('ingredients'));
-        console.log('2' + this.ingredientsLocal);
-       
+        // console.log('2' + this.ingredientsLocal);
       }
         this.ingriedients.push(ingredient);
-        console.log("log ingredients" + this.ingriedients);
+        // console.log("log ingredients" + this.ingriedients);
         this.ingredientsLocal.push({name: ingredient.name, amount: ingredient.amount, unit: ingredient.unit});
         localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
-        console.log('last log of ingredientsLocal');
-        console.log(this.ingredientsLocal);
+        // console.log('last log of ingredientsLocal');
+        // console.log(this.ingredientsLocal);
     }
+//-----------------My LocalStorage piece--------------------------------------------//
+    
+      // his name : addIngredients
+      addRecipeIngredientsToShoppingList(ingredients: Ingredient[]){
+      // method one, but it ends up emitting lots of events might be bad for bigger app
+      // for (let ingredient of ingredients){
+      //   this.addIngredient(ingredient);
+      // }
 
+      this.ingriedients. push(...ingredients);
+
+      if (this.ingredientsLocal === null  ) {
+        this.ingredientsLocal = [];
+      } else {
+        this.ingredientsLocal = JSON.parse(localStorage.getItem('ingredients'));
+      }
+      this.ingredientsLocal.push(...ingredients);
+      localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
+      console.log('pushing ingredients')
+
+      this.ingredientsChanged.emit(this.ingriedients.slice())
+      console.log('Changed ingredient list after pushing ingredients')
+    }
 }
