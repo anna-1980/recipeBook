@@ -10,7 +10,7 @@ export class ShoppingListComponent implements OnInit {
   ingriedients: any[] =  
     // new Ingredient('Apples', 5, 'pieces'),
     // new Ingredient('Carrots', 2, 'pieces'),
-    // new Ingredient('Tofu', 1, 'kg'),]
+    // new Ingredient('Tofu', 1, 'kg'),]git 
     JSON.parse(localStorage.getItem('ingredients')) || []
    ;
 
