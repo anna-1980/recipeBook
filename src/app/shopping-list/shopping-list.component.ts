@@ -8,13 +8,13 @@ import { Ingredient } from '../shared/ingredient.model';
 })
 export class ShoppingListComponent implements OnInit {
   ingriedients: any[] =  
-    // [new Ingredient('Apples', 5, 'pieces'),
+    // new Ingredient('Apples', 5, 'pieces'),
     // new Ingredient('Carrots', 2, 'pieces'),
     // new Ingredient('Tofu', 1, 'kg'),]
-    JSON.parse(localStorage.getItem('ingredients'))
+    JSON.parse(localStorage.getItem('ingredients')) || []
    ;
 
-  ingredientsLocal = [];
+  ingredientsLocal = null;
 
   constructor() {}
 
@@ -24,15 +24,16 @@ export class ShoppingListComponent implements OnInit {
    
     // this.ingriedients.push(ingredient);
     // console.log(ingredient)
-    if (this.ingredientsLocal = null) {
+    if (this.ingredientsLocal === null  ) {
       console.log('1' + this.ingredientsLocal);
-      // ingredientsLocal = [];
+      this.ingredientsLocal = [];
     } else {
       this.ingredientsLocal = JSON.parse(localStorage.getItem('ingredients'));
       console.log('2' + this.ingredientsLocal);
      
     }
-      // this.ingriedients.push(ingredient);
+      this.ingriedients.push(ingredient);
+      console.log("log ingredients" + this.ingriedients);
       this.ingredientsLocal.push({name: ingredient.name, amount: ingredient.amount, unit: ingredient.unit});
       localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
       console.log('last log of ingredientsLocal');
