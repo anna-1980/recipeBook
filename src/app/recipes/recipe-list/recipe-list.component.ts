@@ -8,8 +8,8 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-
- @Output() recipeWasSelected = new EventEmitter<Recipe>();
+// commented out because Services are used now
+//  @Output() recipeWasSelected = new EventEmitter<Recipe>();
 
   recipes: Recipe[];
   // [
@@ -25,9 +25,10 @@ export class RecipeListComponent implements OnInit {
     this.recipes = this.RecipeService.getRecipes();
   }
 
-  onRecipeSelected(recipe: Recipe){
-    this.recipeWasSelected.emit(recipe) //recipe is passed here as data
-  }
+  // redundant if Services are used
+  // onRecipeSelected(recipe: Recipe){
+  //   this.recipeWasSelected.emit(recipe) //recipe is passed here as data
+  // }
 
 }
 
