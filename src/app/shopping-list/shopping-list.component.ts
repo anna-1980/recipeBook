@@ -14,7 +14,7 @@ export class ShoppingListComponent implements OnInit {
     JSON.parse(localStorage.getItem('ingredients')) || []
    ;
 
-  ingredientsLocal =  JSON.parse(localStorage.getItem('ingredients'));
+  ingredientsLocal = null;
 
   constructor() {}
 
