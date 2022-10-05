@@ -4,24 +4,38 @@ import { Ingredient } from '../shared/ingredient.model';
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  styleUrls: ['./shopping-list.component.css'],
 })
 export class ShoppingListComponent implements OnInit {
+  ingriedients: any[] =  
+    // [new Ingredient('Apples', 5, 'pieces'),
+    // new Ingredient('Carrots', 2, 'pieces'),
+    // new Ingredient('Tofu', 1, 'kg'),]
+    JSON.parse(localStorage.getItem('ingredients'))
+   ;
 
-  ingriedients: any[] =[
-    new Ingredient('Apples', 5, 'pieces'), 
-    new Ingredient('Carrots', 2, "pieces"), 
-    new Ingredient('Tofu', 1, "kg"), 
-  ];
+  ingredientsLocal = [];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  onIngredientAdded(ingredient: Ingredient){
-    
-    this.ingriedients.push(ingredient);
+  onIngredientAdded(ingredient: Ingredient) {
+   
+    // this.ingriedients.push(ingredient);
+    // console.log(ingredient)
+    if (this.ingredientsLocal = null) {
+      console.log('1' + this.ingredientsLocal);
+      // ingredientsLocal = [];
+    } else {
+      this.ingredientsLocal = JSON.parse(localStorage.getItem('ingredients'));
+      console.log('2' + this.ingredientsLocal);
+     
+    }
+      // this.ingriedients.push(ingredient);
+      this.ingredientsLocal.push({name: ingredient.name, amount: ingredient.amount, unit: ingredient.unit});
+      localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
+      console.log('last log of ingredientsLocal');
+      console.log(this.ingredientsLocal);
   }
 }
-
