@@ -15,11 +15,12 @@
         <app-recipe-item
         *ngFor="let recipeEl of recipes"
         [recipe]="recipeEl"
-        (recipeSelected)="onRecipeSelected(recipeEl)"
+       
         ></app-recipe-item> 
     </div>
 </div>
  
- 
+<!-- is removed from <app-recipe-item> if services are used
+    (recipeSelected)="onRecipeSelected(recipeEl)" -->
 
 <!-- alternative data binding :  src="{{recipe.imagePath}}" -->

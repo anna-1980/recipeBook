@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'cooking-app';
 
-  loadedFearute = 'shopping-list';
+  loadedFearute = 'recipe';
 
   onNavigate(feature: string) {
     // console.log(feature)
