@@ -1,4 +1,9 @@
-import { Directive, HostBinding, HostListener } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+} from '@angular/core';
 
 //remember to add your directive in App.module !!!
 @Directive({
@@ -10,8 +15,13 @@ export class DropdownDirective {
   // so you attach or detach open class the the class array of the element
   @HostBinding('class.open') isOpen = false; //directive
 
-  @HostListener('click') toggleOpen() {
+  @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
     //listening to a click event
-    this.isOpen = !this.isOpen; // set it to what it is currently not :)
+
+    this.isOpen = this.elRef.nativeElement.contains(event.target)
+      ? !this.isOpen
+      : false;
+    // this.isOpen = !this.isOpen;
   }
+  constructor(private elRef: ElementRef) {}
 }
