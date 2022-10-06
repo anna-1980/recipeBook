@@ -22,6 +22,7 @@ export class ShoppingListComponent implements OnInit {
     this.slService.ingredientsChanged
       .subscribe(
       (recievedIngredients: Ingredient[]) => {
+        // add anf if here?
         this.ingriedients = recievedIngredients;
       }
       );

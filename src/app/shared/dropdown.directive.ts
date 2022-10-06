@@ -13,9 +13,11 @@ export class DropdownDirective {
   // bind to the properties of the element the directive is place on
   //'class' property of this element is simply array of all the classes
   // so you attach or detach open class the the class array of the element
-  @HostBinding('class.open') isOpen = false; //directive
+  @HostBinding('class.open') 
+  isOpen = false; //directive
 
-  @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
+  @HostListener('document:click', ['$event']) 
+  toggleOpen(event: Event) {
     //listening to a click event
 
     this.isOpen = this.elRef.nativeElement.contains(event.target)
