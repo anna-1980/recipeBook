@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
 
@@ -7,8 +8,11 @@ import { ShoppingListService } from './shopping-list.service';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css'],
 })
-export class ShoppingListComponent implements OnInit {
+export class ShoppingListComponent implements OnInit, OnDestroy {
   ingriedients: Ingredient[];
+  // after adding Observables though no syntax for .subscribe change (we subscribe to subject) it is good practive to
+  // put in property and clean it up after we leave the component
+  private igChangeSub: Subscription;
 
   // ingredientsLocal= null;
   // ingredientsLocal: Ingredient[] = JSON.parse(localStorage.getItem('ingredients'));
@@ -17,18 +21,15 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit(): void {
     this.ingriedients = this.slService.getIngredients();
-
     // listening to the event emiter formthe service to update live the new ingredient
-    this.slService.ingredientsChanged
-      .subscribe(
+    this.igChangeSub = this.slService.ingredientsChanged.subscribe(
       (recievedIngredients: Ingredient[]) => {
         // add anf if here?
         this.ingriedients = recievedIngredients;
       }
-      );
+    );
   }
-
-  // onIngredientAdded(ingredient: Ingredient) {
-
-  // }
+  ngOnDestroy(): void {
+    this.igChangeSub.unsubscribe();
+  }
 }

@@ -1,14 +1,14 @@
-import { EventEmitter } from '@angular/core';
+// import { EventEmitter } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
+import { Subject } from 'rxjs';
 
 export class ShoppingListService {
-  //you have to inform the new component that new data is available !
-  ingredientsChanged = new EventEmitter<Ingredient[]>();
+  //you have to inform the new component that new data is available ! below: (obsolete with observables introduced)
+  // ingredientsChanged = new EventEmitter<Ingredient[]>();
+  ingredientsChanged = new Subject<Ingredient[]>(); //instead of emit call next instead
+ //the parts where we "consume" Ingredients do not have to change syntax
 
   private ingriedients: Ingredient[] =
-    // [new Ingredient('Apples', 5, 'pieces'),
-    // new Ingredient('Carrots', 2, 'pieces'),
-    // new Ingredient('Tofu', 1, 'kg'),]
     JSON.parse(localStorage.getItem('ingredients')) || [];
 
   ingredientsLocal: Ingredient[] = JSON.parse(
@@ -21,7 +21,7 @@ export class ShoppingListService {
 
   addIngredient(ingredient: Ingredient) {
     this.ingriedients.push(ingredient);
-    this.ingredientsChanged.emit(this.ingriedients.slice());
+    this.ingredientsChanged.next(this.ingriedients.slice());
     //-----------------My LocalStorage piece----------------------------------------//
     if (this.ingredientsLocal === null) {
       // console.log('1' + this.ingredientsLocal);
@@ -61,7 +61,7 @@ export class ShoppingListService {
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
     console.log('pushing ingredients' + this.ingredientsLocal);
 
-    this.ingredientsChanged.emit(this.ingriedients.slice());
+    this.ingredientsChanged.next(this.ingriedients.slice());
     console.log('Changed ingredient list after pushing ingredients');
   }
 }

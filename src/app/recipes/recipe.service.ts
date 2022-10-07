@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Recipe } from './recipe.model';
@@ -6,7 +7,9 @@ import { Recipe } from './recipe.model';
 @Injectable()
 
 export class RecipeService {
-  recipeSelected = new EventEmitter<Recipe>();
+  //redundand sfter using Subject
+  // recipeSelected = new EventEmitter<Recipe>();
+  recipeSelected = new Subject<Recipe>();
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -34,7 +37,7 @@ export class RecipeService {
       ' 333 another very fine tasty recipe. You must try it, go shopping now :)',
       'https://img.game8.co/3300514/e08f4702cbb16494402c601fbc469e0f.png/show',
       [
-        new Ingredient('Green CHillies', 0.5, 'kg'),
+        new Ingredient('Green Chillies', 0.5, 'kg'),
         new Ingredient('Tomatoes', 1, 'kg'),
         new Ingredient('Rice', 1, 'kg'),
         new Ingredient('Tofu', 400, 'g'),

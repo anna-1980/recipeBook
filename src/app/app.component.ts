@@ -11,8 +11,9 @@ export class AppComponent {
   // loadedFearute = 'recipe';
   loadedFearute = 'shopping-list';
 
-  onNavigate(feature: string) {
-    // console.log(feature)
-    this.loadedFearute = feature;
-  }
+  // obsolete after introducing routing: 
+  // onNavigate(feature: string) {
+  //   console.log(feature)
+  //   this.loadedFearute = feature;
+  // }
 }
