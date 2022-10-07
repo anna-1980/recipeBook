@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Recipe } from './recipe.model';
+// import { Recipe } from './recipe.model';
 import { RecipeService } from './recipe.service';
 
 @Component({
@@ -10,19 +10,25 @@ import { RecipeService } from './recipe.service';
 })
 export class RecipesComponent implements OnInit {
 
-  selectedRecipe: Recipe;
+  // selectedRecipe: Recipe;
 
-  constructor(private  recipeService: RecipeService) { }
+  // constructor(private  recipeService: RecipeService) { }
 
   ngOnInit(): void {
-    // commitg from RecipeService
-    this.recipeService.recipeSelected
-      .subscribe(
-        //because of the way we configured the EventEmitter
-        (recipe: Recipe) => {
-          this.selectedRecipe = recipe
-        }
-      )
+  
   }
 
 }
+
+
+//--------was before routing was added -----------//
+// ngOnInit(): void {
+//   // comming from RecipeService
+//   this.recipeService.recipeSelected
+//     .subscribe(
+//       //because of the way we configured the EventEmitter in recipeService
+//       (recipe: Recipe) => {
+//         this.selectedRecipe = recipe
+//       }
+//     )
+// }
