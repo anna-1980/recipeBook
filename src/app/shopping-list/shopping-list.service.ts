@@ -2,7 +2,7 @@ import { EventEmitter } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 
 export class ShoppingListService {
-  //you have to inform the new component taht new data is available !
+  //you have to inform the new component that new data is available !
   ingredientsChanged = new EventEmitter<Ingredient[]>();
 
   private ingriedients: Ingredient[] =
