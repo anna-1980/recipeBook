@@ -35,7 +35,7 @@ export class RecipeService {
     ),
     new Recipe(
       'Third Chili Tasty Recipe',
-      ' 333 another very fine tasty recipe. You must try it, go shopping now :)',
+      ' So delicious you have to make it. You must try it, go shopping now :)',
       'https://img.game8.co/3300514/e08f4702cbb16494402c601fbc469e0f.png/show',
       [
         new Ingredient('Green Chillies', 0.5, 'kg'),
@@ -46,7 +46,7 @@ export class RecipeService {
     ),
     new Recipe(
       'FourthTasty Recipe',
-      'another very fine tasty recipe  You must try it, go shopping now :)',
+      'Excellent for parties! You must try it, go shopping now :)',
       'https://cdn.pixabay.com/photo/2016/03/31/19/30/dish-1295067_960_720.png',
       [
         new Ingredient('Sneaky river Snail', 0.5, 'kg'),
