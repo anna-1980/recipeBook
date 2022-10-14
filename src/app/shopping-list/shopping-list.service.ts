@@ -7,6 +7,7 @@ export class ShoppingListService {
   // ingredientsChanged = new EventEmitter<Ingredient[]>();
   ingredientsChanged = new Subject<Ingredient[]>(); //instead of emit call next instead
  //the parts where we "consume" Ingredients do not have to change syntax
+  startedEditingShoppingListItem = new Subject<number>();
 
   private ingriedients: Ingredient[] =
     JSON.parse(localStorage.getItem('ingredients')) || [];
@@ -14,6 +15,11 @@ export class ShoppingListService {
   ingredientsLocal: Ingredient[] = JSON.parse(
     localStorage.getItem('ingredients')
   );
+
+  getIngredient(index: number){
+    // return this.ingriedients[index]
+    return this.ingredientsLocal[index]
+  }
 
   getIngredients() {
     return this.ingriedients.slice();
@@ -63,5 +69,13 @@ export class ShoppingListService {
 
     this.ingredientsChanged.next(this.ingriedients.slice());
     console.log('Changed ingredient list after pushing ingredients');
+  }
+
+  updateIngredient(index: number, newIngredient: Ingredient){
+    this.ingriedients[index] = newIngredient;
+    this.ingredientsLocal[index] = newIngredient;
+    localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal))
+    this.ingredientsChanged.next(this.ingriedients.slice());
+    console.log(this.ingredientsLocal)
   }
 }

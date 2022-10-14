@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
@@ -71,3 +72,4 @@ export class RecipeService {
     console.log("from recipe Service- adding ingredinets to shopping List")
   }
 }
+
