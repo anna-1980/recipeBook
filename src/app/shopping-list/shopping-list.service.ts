@@ -6,28 +6,28 @@ export class ShoppingListService {
   //you have to inform the new component that new data is available ! below: (obsolete with observables introduced)
   // ingredientsChanged = new EventEmitter<Ingredient[]>();
   ingredientsChanged = new Subject<Ingredient[]>(); //instead of emit call next instead
- //the parts where we "consume" Ingredients do not have to change syntax
+  //the parts where we "consume" Ingredients do not have to change syntax
   startedEditingShoppingListItem = new Subject<number>();
 
-  private ingriedients: Ingredient[] =
-    JSON.parse(localStorage.getItem('ingredients')) || [];
+  // private ingriedients: Ingredient[] =
+  //   JSON.parse(localStorage.getItem('ingredients')) || [];
 
   ingredientsLocal: Ingredient[] = JSON.parse(
     localStorage.getItem('ingredients')
   );
 
-  getIngredient(index: number){
+  getIngredient(index: number) {
     // return this.ingriedients[index]
-    return this.ingredientsLocal[index]
+    return this.ingredientsLocal[index];
   }
 
   getIngredients() {
-    return this.ingriedients.slice();
+    return this.ingredientsLocal.slice();
   }
 
   addIngredient(ingredient: Ingredient) {
-    this.ingriedients.push(ingredient);
-    this.ingredientsChanged.next(this.ingriedients.slice());
+    this.ingredientsLocal.push(ingredient);
+    this.ingredientsChanged.next(this.ingredientsLocal.slice());
     //-----------------My LocalStorage piece----------------------------------------//
     if (this.ingredientsLocal === null) {
       // console.log('1' + this.ingredientsLocal);
@@ -56,7 +56,7 @@ export class ShoppingListService {
     //   this.addIngredient(ingredient);
     // }
 
-    this.ingriedients.push(...ingredients);
+    this.ingredientsLocal.push(...ingredients);
 
     if (this.ingredientsLocal === null) {
       this.ingredientsLocal = [];
@@ -67,15 +67,25 @@ export class ShoppingListService {
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
     console.log('pushing ingredients' + this.ingredientsLocal);
 
-    this.ingredientsChanged.next(this.ingriedients.slice());
+    this.ingredientsChanged.next(this.ingredientsLocal.slice());
     console.log('Changed ingredient list after pushing ingredients');
   }
 
-  updateIngredient(index: number, newIngredient: Ingredient){
-    this.ingriedients[index] = newIngredient;
+  updateIngredient(index: number, newIngredient: Ingredient) {
+    // this.ingriedients[index] = newIngredient;
     this.ingredientsLocal[index] = newIngredient;
-    localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal))
-    this.ingredientsChanged.next(this.ingriedients.slice());
-    console.log(this.ingredientsLocal)
+    localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
+    this.ingredientsChanged.next(this.ingredientsLocal.slice());
+    // console.log(this.ingredientsLocal)
+  }
+
+  deleteIngredient(index: number) {
+    console.log(index);
+    console.log(this.ingredientsLocal);
+    this.ingredientsLocal.splice(index, 1)
+    localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
+    this.ingredientsChanged.next(this.ingredientsLocal.slice());
+    // this.ingredientsLocal = this.ingredientsLocal.splice(index, 1)
+    // this.ingriedients = this.ingriedients.splice(index, 1)
   }
 }
