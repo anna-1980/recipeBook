@@ -26,8 +26,9 @@ export class RecipeDetailComponent implements OnInit {
       (params: Params) => {
       this.id = Number(params['id']);
       this.recipeDetails = this.recipeService.getRecipe(this.id);
+      console.log(this.recipeDetails)
     });
-    
+
 
   }
 
@@ -44,5 +45,10 @@ export class RecipeDetailComponent implements OnInit {
 
     //alternative nativate:
    this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route}) 
+  }
+
+  onDeleteRecipe(){
+    this.recipeService.deleteRecipe(this.id);
+    this.router.navigate(['/recipes'])
   }
 }

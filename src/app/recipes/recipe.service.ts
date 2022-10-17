@@ -10,10 +10,10 @@ import { Recipe } from './recipe.model';
 export class RecipeService {
   //redundand sfter using Subject
   // recipeSelected = new EventEmitter<Recipe>();
-  recipeSelected = new Subject<Recipe>();
+  // recipeSelected = new Subject<Recipe>();
 
   //to get live update of new recipe added you need to add onChange
-  recipeChanged = new Subject<Recipe[]>()
+  recipeChanged = new Subject<Recipe[]>();
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -89,7 +89,15 @@ export class RecipeService {
   updateRecipe(index: number, newRecipe: Recipe){
     this.recipes[index] = newRecipe;
     this.recipeChanged.next(this.recipes.slice())
-    console.log('recipe service works 222' )
+    // console.log('recipe service works 222' )
+    // this.recipeSelected.next(this.recipes[index])
+    // console.log(this.recipes[index].ingredients)
+  }
+
+  deleteRecipe(index: number){
+    this.recipes.splice(index, 1);
+    this.recipeChanged.next(this.recipes.slice())
+    console.log(this.recipes)
   }
 }
 
