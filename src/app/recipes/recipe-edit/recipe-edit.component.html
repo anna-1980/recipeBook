@@ -1,1 +1,121 @@
-<p>recipe-edit works!</p>
+<div class="row">
+    <div class="col-xs-12">
+<!----------  instructing Angular that overall form is managed by US , not default, so we can assign our own controlls -->
+        <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button 
+                    [disabled]="!recipeForm.valid"
+                    type="submit" 
+                    class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-danger">Cancel</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="name">Name l</label>
+                        <input 
+                        type="text" 
+                        id="name"
+                        class="form-control"
+                        formControlName="name-from-form"
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="imagePath">Image Url</label>
+                        <input 
+                        type="text" 
+                        id="imagePath"
+                        class="form-control"
+                        formControlName="imagePath-from-form"
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                     <img src="" class="img-responsive"  alt="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea 
+                        type="text" 
+                        id="imagePath"
+                        class="form-control"
+                        rows="6"
+                        formControlName="description-from-form"
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+<!--------- here you need an array of items --------->
+
+    <!-- headings of input fields -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                    <div class="col-xs-6 font-bold">Ingredient Name</div>
+                    <div class="col-xs-2 font-bold">Amount</div>
+                    <div class="col-xs-2 font-bold">kg, mL, etc...</div>
+            </div>
+        </div>
+    </div>
+     <!-- headings of input fields -->
+
+            <div class="row">
+                <div class="col-xs-12" formArrayName="ingredients">
+                  <div class="row"
+                  *ngFor="let ingredientCtrl of getControls(); let i = index"
+                  [formGroupName]="i">
+                  <br>
+                    <div class="col-xs-6">
+                        <input 
+                        id="ingredientName"
+                        type="text"
+                        class="form-control"
+                        formControlName="name-a"
+                        >
+                    </div>
+                    <div class="col-xs-2">
+                        <input 
+                        id="amount"
+                        type="number"
+                        class="form-control"
+                        formControlName="amount-a"
+                        >
+                    </div>
+                    <div class="col-xs-2">
+                        <input 
+                        is="measureUnit"
+                        type="text"
+                        class="form-control"
+                        formControlName="unit-a"
+                        >
+                    </div>
+                    <div class="col-xs-2">
+                        <label for="measureUnit"></label>
+                      <button class="btn btn-danger">X</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button
+                    (click)="onAddIngredient()"
+                    type="button" 
+                    class="btn btn-success">Add ingredient</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

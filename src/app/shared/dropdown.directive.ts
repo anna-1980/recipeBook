@@ -14,6 +14,7 @@ export class DropdownDirective {
   //'class' property of this element is simply array of all the classes
   // so you attach or detach open class the the class array of the element
   @HostBinding('class.open') 
+  @HostBinding('red') 
   isOpen = false; //directive
 
   @HostListener('document:click', ['$event']) 
