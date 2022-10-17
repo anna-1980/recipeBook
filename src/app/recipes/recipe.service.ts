@@ -12,6 +12,9 @@ export class RecipeService {
   // recipeSelected = new EventEmitter<Recipe>();
   recipeSelected = new Subject<Recipe>();
 
+  //to get live update of new recipe added you need to add onChange
+  recipeChanged = new Subject<Recipe[]>()
+
   private recipes: Recipe[] = [
     new Recipe(
       'Tasty Recipe Apples',
@@ -70,6 +73,23 @@ export class RecipeService {
   addIngredientsToShoppingList(ingredients: Ingredient[]){
     this.slService.addRecipeIngredientsToShoppingList(ingredients);
     console.log("from recipe Service- adding ingredinets to shopping List")
+  }
+
+  addRecipe(recipe: Recipe){
+    this.recipes.push(recipe);
+    // same approach ro refresh (emit even about new recipe) like with the shopping list
+   // listen to this event in the recipeList.html 
+   // and on change you will recive a new arrray of recipes
+    this.recipeChanged.next(this.recipes.slice())
+    console.log('111 recipe service works' + recipe)
+    console.log(recipe)
+    console.log(this.recipes)
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe){
+    this.recipes[index] = newRecipe;
+    this.recipeChanged.next(this.recipes.slice())
+    console.log('recipe service works 222' )
   }
 }
 

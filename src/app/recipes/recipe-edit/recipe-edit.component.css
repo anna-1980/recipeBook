@@ -6,3 +6,7 @@
   font-weight: 600;
   white-space:nowrap;
 }
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched{
+  border: 2px solid red;
+}
