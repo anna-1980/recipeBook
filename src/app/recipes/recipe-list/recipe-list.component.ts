@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
@@ -8,7 +9,7 @@ import { RecipeService } from '../recipe.service';
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
-export class RecipeListComponent implements OnInit {
+export class RecipeListComponent implements OnInit, OnDestroy {
 // commented out because Services are used now
 //  @Output() recipeWasSelected = new EventEmitter<Recipe>();
 
@@ -19,6 +20,8 @@ export class RecipeListComponent implements OnInit {
   //   new Recipe( 'Third Tasty Recipe', ' 333 another very fine tasty recipe. You must try it, go shopping now :)', 'https://img.game8.co/3300514/e08f4702cbb16494402c601fbc469e0f.png/show' ),
   //   new Recipe( 'New Tasty Recipe', 'another very fine tasty recipe  You must try it, go shopping now :)', 'https://cdn.pixabay.com/photo/2016/03/31/19/30/dish-1295067_960_720.png' ),
   // ]
+   
+  subscription: Subscription;
 
   constructor(
     private RecipeService: RecipeService, 
@@ -26,7 +29,7 @@ export class RecipeListComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.RecipeService.recipeChanged
+    this.subscription = this.RecipeService.recipeChanged
     .subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes
@@ -34,6 +37,10 @@ export class RecipeListComponent implements OnInit {
     )
     this.recipes = this.RecipeService.getRecipes();
   }
+
+  onUpdatedRecipe(){
+    console.log(this.recipes)
+  } 
 
   //onNewRecipe
   onAddingNewRecipe(){
@@ -45,6 +52,9 @@ export class RecipeListComponent implements OnInit {
   //   this.recipeWasSelected.emit(recipe) //recipe is passed here as data
   // }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }
 
 //  recipe is going to be used a lot through out the app 
