@@ -37,7 +37,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         this.editMode = true;
         this.editedItemIndexNumber = index;
         this.editedCurrentlyItem = this.slService.getIngredient(index);
-        
+
         // slForm.setValue makes wure the form gets populated with the selected item
         this.slForm.setValue({
           name: this.editedCurrentlyItem.name,
@@ -76,6 +76,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onClear() {
     this.slForm.reset();
     this.editMode = false;
+    this.slService.selectedItem = false;
   }
 
   onDelete() {

@@ -54,38 +54,62 @@
                 </div>
             </div>
 <!--------- here you need an array of items --------->
+
+    <!-- headings of input fields -->
+    <div class="row">
+        <div class="col-xs-12">
             <div class="row">
-                <div class="col-xs-12">
-                  <div class="row">
-                    <div class="col-xs-7">
-                        <label for="ingredientName">Ingredient Name</label>
+                    <div class="col-xs-6 font-bold">Ingredient Name</div>
+                    <div class="col-xs-2 font-bold">Amount</div>
+                    <div class="col-xs-2 font-bold">kg, mL, etc...</div>
+            </div>
+        </div>
+    </div>
+     <!-- headings of input fields -->
+            <div class="row">
+                <div class="col-xs-12" formArrayName="ingredients-from-form">
+                  <div class="row"
+                  *ngFor="let ingredientCtrl of getControls(); let i = index"
+                  [formGroupName]="i">
+                  <br>
+                    <div class="col-xs-6">
                         <input 
                         id="ingredientName"
                         type="text"
                         class="form-control"
+                        formControlName="name-a"
                         >
                     </div>
                     <div class="col-xs-2">
-                        <label for="amount">Amount</label>
                         <input 
                         id="amount"
                         type="number"
                         class="form-control"
+                        formControlName="amount-a"
                         >
                     </div>
                     <div class="col-xs-2">
-                        <label for="measureUnit" class="no-space-break">(kg, mL, etc...)</label>
                         <input 
                         is="measureUnit"
                         type="text"
                         class="form-control"
+                        formControlName="unit-a"
                         >
                     </div>
-                    <div class="col-xs-1">
+                    <div class="col-xs-2">
                         <label for="measureUnit"></label>
                       <button class="btn btn-danger">X</button>
                     </div>
                   </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button
+                    (click)="onAddIngredient()"
+                    type="button" 
+                    class="btn btn-success">Add ingredient</button>
                 </div>
             </div>
         </form>

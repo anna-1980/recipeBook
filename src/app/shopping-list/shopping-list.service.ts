@@ -12,6 +12,8 @@ export class ShoppingListService {
   // private ingriedients: Ingredient[] =
   //   JSON.parse(localStorage.getItem('ingredients')) || [];
 
+  selectedItem: boolean = true;
+
   ingredientsLocal: Ingredient[] = JSON.parse(
     localStorage.getItem('ingredients')
   );

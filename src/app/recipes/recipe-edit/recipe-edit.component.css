@@ -1,3 +1,8 @@
-.no-space-break{
+/* .no-space-break{
     white-space:nowrap;
-  }
+  } */
+
+.font-bold{
+  font-weight: 600;
+  white-space:nowrap;
+}

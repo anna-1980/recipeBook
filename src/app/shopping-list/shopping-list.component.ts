@@ -15,7 +15,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   private igChangeSub: Subscription;
   private isListItemActive: Subscription;
   selectedListItem: Ingredient; 
-  
+  editItem: boolean = false;
+
   constructor(private slService: ShoppingListService, private elRef: ElementRef) {}
 
   ngOnInit(): void {
@@ -31,13 +32,16 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     .subscribe(
       (index: number) => {
         this.selectedListItem = this.slService.getIngredient(index)
-        console.log(this.selectedListItem)
+        // console.log(this.selectedListItem)
         });
-       
+    console.log(this.editItem)  
+    console.log(this.slService.selectedItem)
   }
 
   onEditSLItem(index: number, select){
     this.slService.startedEditingShoppingListItem.next(index)
+    // this.editItem = true;
+ 
     // console.log(select)
     // console.log(this.elRef.nativeElement)
     // console.log(select.classList)
