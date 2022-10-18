@@ -81,7 +81,7 @@ export class RecipeService {
    // listen to this event in the recipeList.html 
    // and on change you will recive a new arrray of recipes
     this.recipeChanged.next(this.recipes.slice())
-    console.log('111 recipe service works' + recipe)
+    console.log(`'111 recipe service works' + ${recipe}`)
     console.log(recipe)
     console.log(this.recipes)
   }
@@ -91,7 +91,7 @@ export class RecipeService {
     this.recipeChanged.next(this.recipes.slice())
     // console.log('recipe service works 222' )
     // this.recipeSelected.next(this.recipes[index])
-    // console.log(this.recipes[index].ingredients)
+    console.log(this.recipes[index].ingredients)
   }
 
   deleteRecipe(index: number){

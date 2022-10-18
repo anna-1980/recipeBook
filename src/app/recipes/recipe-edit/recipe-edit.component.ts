@@ -2,6 +2,7 @@ import { formatPercent } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Ingredient } from 'src/app/shared/ingredient.model';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
@@ -95,10 +96,20 @@ export class RecipeEditComponent implements OnInit {
       this.recipeForm.value['name-from-form'],
       this.recipeForm.value['description-from-form'],
       this.recipeForm.value['imagePath-from-form'], 
-      this.recipeForm.value['ingredients']
-       );
+      //because the keys for Ingredients are name: and amount: and unit: and the object agFOrms creates (bacause of the way input fields are named) are name-a: amount-a unit-a: you have to map them to diferent key names like below
+      this.recipeForm.value['ingredients'].map(ingredients => { return {"name": ingredients["name-a"], "amount": ingredients["amount-a"], "unit": ingredients["unit-a"]}; }))
+    // console.log(this.recipeForm.value['ingredients'])
+    // console.log(this.recipeForm.value['ingredients'].map(({key, value}) => ({[key]: value})))
+    console.log(this.recipeForm.value['ingredients'].map(ingredients => ( {"name": ingredients["name-a"], "amount": ingredients["amount-a"], "unit": ingredients["unit-a"]} )))
+    
+    const ingredientList = this.recipeForm.value['ingredients']
+    const[ desArray1]= ingredientList
+      console.log(desArray1)
+    const {amount}= desArray1
+      console.log(amount)
     if (this.editMode){
       this.recipeService.updateRecipe(this.id, newRecipe)
+      console.log(this.recipeForm.value)
       // this.recipeService.updateRecipe(this.id, this.recipeForm.value)
     } else {
       this.recipeService.addRecipe(newRecipe)
