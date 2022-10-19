@@ -50,6 +50,14 @@
                 {{singleIngredients.name}} - {{singleIngredients.amount}} - {{singleIngredients.unit}}
             </li>
         </ul>
+        <p>Date: </p>
+        <p>{{today | date: 'medium'}}</p>
+        <hr>
+        <p>using pipes</p>
         {{recipeDetails|json}}
+        <hr>
+        {{recipeDetails.ingredients|json}}
+        <hr>
+        {{recipeDetails.ingredients|json | slice : 1 : 90 }}
     </div>
 </div>

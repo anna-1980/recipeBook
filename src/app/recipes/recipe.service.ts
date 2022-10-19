@@ -91,7 +91,7 @@ export class RecipeService {
     this.recipeChanged.next(this.recipes.slice())
     // console.log('recipe service works 222' )
     // this.recipeSelected.next(this.recipes[index])
-    console.log(this.recipes[index].ingredients)
+    // console.log(this.recipes[index].ingredients)
   }
 
   deleteRecipe(index: number){
