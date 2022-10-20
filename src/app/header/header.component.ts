@@ -16,6 +16,10 @@ export class HeaderComponent implements OnInit {
   onSaveRecipes(){
     this.dataSotrageService.saveRecipes();
   }
+
+  onGetRecipes(){
+    this.dataSotrageService.getRecipes().subscribe();
+  }
   // onSelect(feature: string, event) {
   //   console.log('button clicked');
   //   console.log(feature);

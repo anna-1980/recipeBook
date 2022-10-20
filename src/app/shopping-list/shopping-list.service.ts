@@ -24,11 +24,13 @@ export class ShoppingListService {
   }
 
   getIngredients() {
-    return this.ingredientsLocal.slice();
+    return this.ingredientsLocal;
   }
 
   addIngredient(ingredient: Ingredient) {
-    this.ingredientsLocal.push(ingredient);
+    this.ingredientsLocal ? this.ingredientsLocal.push(ingredient)
+    :this.ingredientsLocal.push(ingredient);
+    
     this.ingredientsChanged.next(this.ingredientsLocal.slice());
     //-----------------My LocalStorage piece----------------------------------------//
     if (this.ingredientsLocal === null) {
