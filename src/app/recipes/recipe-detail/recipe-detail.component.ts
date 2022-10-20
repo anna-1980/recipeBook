@@ -11,6 +11,9 @@ import { RecipeService } from '../recipe.service';
 export class RecipeDetailComponent implements OnInit {
   recipeDetails: Recipe;
   id: number;
+  //------trying out pipes-------//
+  today: Date = new Date();
+  //------trying out pipes-------//
 
   constructor(
     private recipeService: RecipeService,
@@ -26,7 +29,7 @@ export class RecipeDetailComponent implements OnInit {
       (params: Params) => {
       this.id = Number(params['id']);
       this.recipeDetails = this.recipeService.getRecipe(this.id);
-      console.log(this.recipeDetails)
+      // console.log(this.recipeDetails)
     });
 
 

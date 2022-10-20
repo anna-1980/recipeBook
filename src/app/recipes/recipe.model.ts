@@ -13,6 +13,6 @@ export class Recipe {
         this.imagePath= imagePath;
         this.ingredients= ingredients;
 
-        console.log(ingredients);
+        // console.log(ingredients);
     }
 }

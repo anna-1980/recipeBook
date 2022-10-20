@@ -16,6 +16,8 @@ export class RecipeEditComponent implements OnInit {
   editMode = false; //to check if we are adding new recipe or editing an existing one (see .subscribe conditions)
   recipeForm: FormGroup;
 
+
+
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService, 
@@ -91,25 +93,39 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.recipeForm);
+  //---- alternative approach to re-naming the key: values of the ofrm to be passed correctly to create Ingredinet to 
+  //---- but it requires renaming all array ingredients keys ... it is doable, requires way more code...
+    // console.log(this.recipeForm);
+    // const ingredientList = this.recipeForm.value['ingredients']
+    // const[ desArray1, desArray2, desArray3, desArray4]= ingredientList
+      // console.log(JSON. stringify(desArray1))
+    // const {'amount-a': amount, 'name-a': name, 'unit-a': unit}= desArray1
+    //   console.log(amount + name + unit)
+
+    // let recipeIngredients = [{
+    //   amount: amount,
+    //   name: name, 
+    //   unit: unit
+    // }]
+    // console.log(recipeIngredients)
+  //-----------------------------------------------------------------//
     const newRecipe = new Recipe(
       this.recipeForm.value['name-from-form'],
       this.recipeForm.value['description-from-form'],
       this.recipeForm.value['imagePath-from-form'], 
       //because the keys for Ingredients are name: and amount: and unit: and the object agFOrms creates (bacause of the way input fields are named) are name-a: amount-a unit-a: you have to map them to diferent key names like below
-      this.recipeForm.value['ingredients'].map(ingredients => { return {"name": ingredients["name-a"], "amount": ingredients["amount-a"], "unit": ingredients["unit-a"]}; }))
+      this.recipeForm.value['ingredients'].map(ingredients => { return {"name": ingredients["name-a"], "amount": ingredients["amount-a"], "unit": ingredients["unit-a"]}; })
+      // recipeIngredients
+      )
+
     // console.log(this.recipeForm.value['ingredients'])
     // console.log(this.recipeForm.value['ingredients'].map(({key, value}) => ({[key]: value})))
-    console.log(this.recipeForm.value['ingredients'].map(ingredients => ( {"name": ingredients["name-a"], "amount": ingredients["amount-a"], "unit": ingredients["unit-a"]} )))
+    // console.log(this.recipeForm.value['ingredients'].map(ingredients => ( {"name": ingredients["name-a"], "amount": ingredients["amount-a"], "unit": ingredients["unit-a"]} )))
     
-    const ingredientList = this.recipeForm.value['ingredients']
-    const[ desArray1]= ingredientList
-      console.log(desArray1)
-    const {amount}= desArray1
-      console.log(amount)
+
     if (this.editMode){
       this.recipeService.updateRecipe(this.id, newRecipe)
-      console.log(this.recipeForm.value)
+      console.log(this.recipeForm)
       // this.recipeService.updateRecipe(this.id, this.recipeForm.value)
     } else {
       this.recipeService.addRecipe(newRecipe)
