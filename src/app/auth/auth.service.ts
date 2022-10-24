@@ -1,21 +1,24 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { throwError } from "rxjs";
-import { catchError} from "rxjs/operators";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Subject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { UserModel } from './user.model';
 
 //to store the response from Firebase authentication sign up endpoint
 // it is a good practive to define the types of data you work with (look post response data below)
-export interface AuthResponseData{
-    kind: string;
-    idToken: string; 
-    email: string;
-    refreshToken: string;
-    expiresIn: string;
-    localId: string;
+export interface AuthResponseData {
+  kind: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  user = new Subject<UserModel>(); // so we emit the user whenever we login or loggout
+
   constructor(private http: HttpClient) {}
   signUp(email: string, password: string) {
     // return the observable to know the current state of the request, and subscribe in the component where you use it
@@ -29,7 +32,7 @@ export class AuthService {
         }
       )
       .pipe(
-        catchError(this.handleError)
+        catchError(this.handleError),
         // errorResponse => {
         //     let errorMesage = 'An unknown error accured!'
         //     if(!errorResponse.error || !errorResponse.error.error){
@@ -43,6 +46,25 @@ export class AuthService {
         // console.log(errorResponse)
         // }
         // )
+        tap((responseDatTap) => {
+          this.handleAuthentication(
+            responseDatTap.email,
+            responseDatTap.localId,
+            responseDatTap.idToken,
+            +responseDatTap.expiresIn
+          );
+          //-- geting the token expiry time in mili seconds and wrapping it with Date object which converts it to concrete time, with the mili seconds, so expiry in Data Object form
+          //   const expirationDate = new Date(
+          //     new Date().getTime() + responseDatTap.expiresIn * 1000
+          //   );
+          //   const user = new UserModel(
+          //     responseDatTap.email,
+          //     responseDatTap.localId,
+          //     responseDatTap.idToken,
+          //     expirationDate
+          //   );
+          //   this.user.next(user); // using Subject from above code user = new Subject<UserModel>();
+        })
       );
   }
 
@@ -56,7 +78,28 @@ export class AuthService {
           returnSecureToken: true,
         }
       )
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        tap((responseDatTap) => {
+          this.handleAuthentication(
+            responseDatTap.email,
+            responseDatTap.localId,
+            responseDatTap.idToken,
+            +responseDatTap.expiresIn
+          );
+        })
+      );
+  }
+
+  private handleAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number
+  ) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new UserModel(email, userId, token, expirationDate);
+    this.user.next(user); // using Subject from above code user = new Subject<UserModel>();
   }
 
   private handleError(errorRes: HttpErrorResponse) {
