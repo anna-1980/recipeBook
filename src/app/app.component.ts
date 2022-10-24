@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'cooking-app';
+export class AppComponent implements OnInit {
 
-  // loadedFearute = 'recipe';
-  loadedFearute = 'shopping-list';
+  constructor(private authService: AuthService){
 
-  // obsolete after introducing routing: 
-  // onNavigate(feature: string) {
-  //   console.log(feature)
-  //   this.loadedFearute = feature;
-  // }
+  }
+
+  ngOnInit(): void {
+    this.authService.autoLoginFromLocalStorage()
+  }
+ 
 }

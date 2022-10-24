@@ -37,6 +37,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   //   this.featureSelected.emit(feature);
   // }
 
+  onLoggout(){
+    console.log("logging out")
+    this.authService.logout();
+  }
+
   ngOnDestroy(): void {
     
   }

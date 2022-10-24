@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserModel } from './user.model';
 
@@ -17,9 +18,35 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new Subject<UserModel>(); // so we emit the user whenever we login or loggout
+  // user = new Subject<UserModel>(); // so we emit the user whenever we login or loggout, this also stores the Token
+  user = new BehaviorSubject<UserModel>(null); // additionally provides subscribes immidiate access to the previously emitted value even if there were not subscribe to it, that is why it has to be initiatd with a starter value
+  // now it the dataStorage service you can reach out to get the user data
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
+
+  autoLoginFromLocalStorage() {
+    const userData: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(localStorage.getItem('userLoginData'));
+    if (!userData) {
+      return;
+    }
+
+    const loadedUser = new UserModel(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+    }
+  }
+
   signUp(email: string, password: string) {
     // return the observable to know the current state of the request, and subscribe in the component where you use it
     return this.http
@@ -100,6 +127,7 @@ export class AuthService {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new UserModel(email, userId, token, expirationDate);
     this.user.next(user); // using Subject from above code user = new Subject<UserModel>();
+    localStorage.setItem('userLoginData', JSON.stringify(user));
   }
 
   private handleError(errorRes: HttpErrorResponse) {
@@ -121,5 +149,11 @@ export class AuthService {
         errorMesage = 'You have been BANNED for bad behaviour!';
     }
     return throwError(() => new Error(errorMesage));
+  }
+
+  logout() {
+    this.user.next(null);
+    this.router.navigate(['/auth']);
+    localStorage.removeItem('userLoginData')
   }
 }
