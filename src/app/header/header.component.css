@@ -1,0 +1,15 @@
+
+.svg-wrapper{
+    width: fit-content;
+    height: content;
+    display: flex;
+    margin: 0;
+    /* align-items: center; */
+    /* justify-content: center; */
+}
+.svg-box{
+    width: 24px;
+    height: 24px;
+    margin: auto 10px;
+    fill: rgb(236, 26, 26);
+}
