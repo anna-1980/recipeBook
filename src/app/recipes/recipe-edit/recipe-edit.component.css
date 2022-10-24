@@ -34,6 +34,7 @@ input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched{
   animation: warning 4s ease infinite ;
   animation-fill-mode: both;
   transition: all 0.5s;
+  background: linear-gradient(0.25turn, rgba(59, 64, 67, 1), #fefffd, rgba(59, 64, 67, 1));
 }
  
 
