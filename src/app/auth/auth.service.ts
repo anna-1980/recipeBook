@@ -22,6 +22,8 @@ export class AuthService {
   user = new BehaviorSubject<UserModel>(null); // additionally provides subscribes immidiate access to the previously emitted value even if there were not subscribe to it, that is why it has to be initiatd with a starter value
   // now it the dataStorage service you can reach out to get the user data
 
+  private tokenExpirationTimer: any;
+
   constructor(private http: HttpClient, private router: Router) {}
 
   autoLoginFromLocalStorage() {
@@ -44,6 +46,12 @@ export class AuthService {
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
+
+      //---- here to pass the remaining time has to be calculated ----//
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      this.autoLoggout(expirationDuration);
     }
   }
 
@@ -128,6 +136,11 @@ export class AuthService {
     const user = new UserModel(email, userId, token, expirationDate);
     this.user.next(user); // using Subject from above code user = new Subject<UserModel>();
     localStorage.setItem('userLoginData', JSON.stringify(user));
+
+    //--- auto loggout, it needs the token expiration time from here--//
+    this.autoLoggout(expiresIn * 1000);
+    console.log(expirationDate)
+    // console.log(expiresIn)
   }
 
   private handleError(errorRes: HttpErrorResponse) {
@@ -154,6 +167,21 @@ export class AuthService {
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
-    localStorage.removeItem('userLoginData')
+    localStorage.removeItem('userLoginData');
+
+    //clearning the logoutTimer
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLoggout(expirationDuration: number) {
+    // it will be called whenever a new User is emitted into or application
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+      // console.log('logged out');
+    }, expirationDuration);
+    console.log(this.tokenExpirationTimer);
   }
 }

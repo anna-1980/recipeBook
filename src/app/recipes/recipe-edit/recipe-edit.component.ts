@@ -95,19 +95,19 @@ export class RecipeEditComponent implements OnInit {
   onSubmit() {
   //---- alternative approach to re-naming the key: values of the ofrm to be passed correctly to create Ingredinet to 
   //---- but it requires renaming all array ingredients keys ... it is doable, requires way more code...
-    // console.log(this.recipeForm);
-    // const ingredientList = this.recipeForm.value['ingredients']
-    // const[ desArray1, desArray2, desArray3, desArray4]= ingredientList
-      // console.log(JSON. stringify(desArray1))
-    // const {'amount-a': amount, 'name-a': name, 'unit-a': unit}= desArray1
-    //   console.log(amount + name + unit)
+    console.log(this.recipeForm);
+    const ingredientList = this.recipeForm.value['ingredients']
+    const[ desArray1, desArray2, desArray3, desArray4]= ingredientList
+      console.log(JSON. stringify(desArray1))
+    const {'amount-a': amount, 'name-a': name, 'unit-a': unit}= desArray1
+      console.log(amount + name + unit)
 
-    // let recipeIngredients = [{
-    //   amount: amount,
-    //   name: name, 
-    //   unit: unit
-    // }]
-    // console.log(recipeIngredients)
+    let recipeIngredients = [{
+      amount: amount,
+      name: name, 
+      unit: unit
+    }]
+    console.log(recipeIngredients)
   //-----------------------------------------------------------------//
     const newRecipe = new Recipe(
       this.recipeForm.value['name-from-form'],
