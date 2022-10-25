@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
  
  
-import { ShoppingListService } from './shopping-list/shopping-list.service';
-import { RecipeService } from './recipes/recipe.service';
+// import { ShoppingListService } from './shopping-list/shopping-list.service';
+// import { RecipeService } from './recipes/recipe.service';
 import { AuthComponent } from './auth/auth.component';
  
 import { AuthInterceptorTsService } from './auth/auth-interceptor.ts.service';
@@ -19,6 +19,7 @@ import { AuthInterceptorTsService } from './auth/auth-interceptor.ts.service';
 import { RecipesModule } from './recipes/recipes.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
+import { AuthModule } from './auth/auth.module';
 
 
 
@@ -28,23 +29,23 @@ import { SharedModule } from './shared/shared.module';
     HeaderComponent,
 
     // DropdownDirective,
-    AuthComponent,
+    // AuthComponent,
     // LoadingSpinnerComponent,
     // AlertComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
+    // FormsModule,
     HttpClientModule,
     RecipesModule,
     ShoppingListModule, 
-    SharedModule
+    SharedModule, 
+    AuthModule
   ],
   providers: [
-    ShoppingListService,
-    RecipeService,
+    // ShoppingListService,
+    // RecipeService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorTsService,

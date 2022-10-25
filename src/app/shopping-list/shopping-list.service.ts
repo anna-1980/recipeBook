@@ -1,7 +1,9 @@
 // import { EventEmitter } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class ShoppingListService {
   //you have to inform the new component that new data is available ! below: (obsolete with observables introduced)
   // ingredientsChanged = new EventEmitter<Ingredient[]>();

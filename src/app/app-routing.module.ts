@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/recipes', pathMatch: 'full' },
   // recipes related routes were outsourced to the recipe.module
 
-  {path: 'auth', component: AuthComponent}
+  // {path: 'auth', component: AuthComponent}
 ];
 
 @NgModule({
