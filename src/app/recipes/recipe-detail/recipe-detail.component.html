@@ -60,4 +60,12 @@
         <hr>
         {{recipeDetails.ingredients|json | slice : 1 : 90 }}
     </div>
+    <li class="dropdown"  >
+        <div  class="dropdown-toggle" role="button">Manage <span class="caret"></span></div>
+        <!-- <ul class="dropdown-menu open"> -->
+            <div><a style="cursor: pointer;"  (click)="onAddToShoppingList()" >AAA</a></div>
+            <div><a style="cursor: pointer;" (click)="onEditRecipe()">BBB</a></div>
+            <div><a style="cursor: pointer;" (click)="onDeleteRecipe()">CCC</a></div>
+        <!-- </ul> -->
+    </li>
 </div>
