@@ -14,7 +14,7 @@ import { AuthComponent } from "./auth.component";
         CommonModule, //ngIf and ngFor
         FormsModule,
         RouterModule.forChild([
-            {path: 'auth', component: AuthComponent}
+            {path: '', component: AuthComponent}
         ])
     ]
 })
