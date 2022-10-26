@@ -68,14 +68,16 @@ export class ShoppingListService {
 
     if (this.ingredientsLocal === null) {
       this.ingredientsLocal = [];
-      // this.ingredientsLocal.push(...ingredients);
+      this.ingredientsLocal.push(...ingredients);
     } else {
       this.ingredientsLocal = JSON.parse(localStorage.getItem('ingredients'));
+      this.ingredientsLocal.push(...ingredients);
     }
-    this.ingredientsLocal.push(...ingredients);
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
+    
     // console.log('pushing ingredients' + this.ingredientsLocal);
-
+    
+    
     this.ingredientsChanged.next(this.ingredientsLocal.slice());
     // console.log('Changed ingredient list after pushing ingredients');
   }
