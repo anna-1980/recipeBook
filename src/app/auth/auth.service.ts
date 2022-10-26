@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserModel } from './user.model';
+import { environment } from 'src/environments/environment';
 
 //to store the response from Firebase authentication sign up endpoint
 // it is a good practive to define the types of data you work with (look post response data below)
@@ -59,7 +60,7 @@ export class AuthService {
     // return the observable to know the current state of the request, and subscribe in the component where you use it
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyArB2DLkd1wwPiqpGkTAFbHR_tu74zVSlU',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseAPIKey,
         {
           email: email,
           password: password,
@@ -106,7 +107,7 @@ export class AuthService {
   logIn(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyArB2DLkd1wwPiqpGkTAFbHR_tu74zVSlU',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+ environment.firebaseAPIKey,
         {
           email: email,
           password: password,
@@ -139,7 +140,7 @@ export class AuthService {
 
     //--- auto loggout, it needs the token expiration time from here--//
     this.autoLoggout(expiresIn * 1000);
-    console.log(expirationDate)
+    // console.log(expirationDate)
     // console.log(expiresIn)
   }
 

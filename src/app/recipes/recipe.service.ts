@@ -79,7 +79,7 @@ export class RecipeService {
 
   addIngredientsToShoppingList(ingredients: Ingredient[]){
     this.slService.addRecipeIngredientsToShoppingList(ingredients);
-    console.log("from recipe Service- adding ingredinets to shopping List")
+    // console.log("from recipe Service- adding ingredinets to shopping List")
   }
 
   addRecipe(recipe: Recipe){
@@ -88,9 +88,9 @@ export class RecipeService {
    // listen to this event in the recipeList.html 
    // and on change you will recive a new arrray of recipes
     this.recipeChanged.next(this.recipes.slice())
-    console.log(`'111 recipe service works' + ${recipe}`)
-    console.log(recipe)
-    console.log(this.recipes)
+    // console.log(`'111 recipe service works' + ${recipe}`)
+    // console.log(recipe)
+    // console.log(this.recipes)
   }
 
   updateRecipe(index: number, newRecipe: Recipe){
@@ -104,7 +104,7 @@ export class RecipeService {
   deleteRecipe(index: number){
     this.recipes.splice(index, 1);
     this.recipeChanged.next(this.recipes.slice())
-    console.log(this.recipes)
+    // console.log(this.recipes)
   }
 }
 

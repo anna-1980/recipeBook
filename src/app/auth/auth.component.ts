@@ -23,16 +23,16 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.user.subscribe((user)=>{
-      console.log(user)
+      // console.log(user)
       this.isAuthenticated = !user ? false : true;
       this.userDetails = user.email
     }) 
-    console.log(this.userDetails)
+    // console.log(this.userDetails)
   }
 
   onSwitchMode(){
     this.isLoggedInMode = !this.isLoggedInMode  /// change it to what it is currently NOT, so switch
-    console.log(this.isLoggedInMode)
+    // console.log(this.isLoggedInMode)
   }
 
   onSubmit(form: NgForm){
@@ -53,17 +53,17 @@ export class AuthComponent implements OnInit {
     } else {
       authObservables = this.authService.signUp(email, password);
     }
-    console.log(this.isLoggedInMode);
+    // console.log(this.isLoggedInMode);
 
     // one of the two observables will be sotred in let authObservables and we can share this code is the current observable state
     authObservables.subscribe(
       (responseData) => {
-        console.log(responseData);
+        // console.log(responseData);
         this.isLoading = false;
         this.router.navigate(['/recipes']) // programatic type of navigation
       },
       (errorMessageFromAuthService) => {
-        console.log(errorMessageFromAuthService);
+        // console.log(errorMessageFromAuthService);
         this.error = errorMessageFromAuthService;
         this.isLoading = false;
       }

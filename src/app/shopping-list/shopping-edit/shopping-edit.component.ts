@@ -46,7 +46,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         });
       }
     );
-    console.log(this.editedItemIndexNumber);
+    // console.log(this.editedItemIndexNumber);
   }
 
   onAddItemOrSubmit(form: NgForm) {
@@ -80,11 +80,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    console.log('try to delete');
-    console.log(this.editedItemIndexNumber);
+    // console.log('try to delete');
+    // console.log(this.editedItemIndexNumber);
     this.slService.deleteIngredient(this.editedItemIndexNumber);
     this.onClear();
-    console.log('Success to delete');
+    // console.log('Success to delete');
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

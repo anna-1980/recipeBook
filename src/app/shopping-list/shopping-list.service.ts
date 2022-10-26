@@ -71,10 +71,10 @@ export class ShoppingListService {
     }
     this.ingredientsLocal.push(...ingredients);
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
-    console.log('pushing ingredients' + this.ingredientsLocal);
+    // console.log('pushing ingredients' + this.ingredientsLocal);
 
     this.ingredientsChanged.next(this.ingredientsLocal.slice());
-    console.log('Changed ingredient list after pushing ingredients');
+    // console.log('Changed ingredient list after pushing ingredients');
   }
 
   updateIngredient(index: number, newIngredient: Ingredient) {
@@ -86,8 +86,8 @@ export class ShoppingListService {
   }
 
   deleteIngredient(index: number) {
-    console.log(index);
-    console.log(this.ingredientsLocal);
+    // console.log(index);
+    // console.log(this.ingredientsLocal);
     this.ingredientsLocal.splice(index, 1)
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
     this.ingredientsChanged.next(this.ingredientsLocal.slice());

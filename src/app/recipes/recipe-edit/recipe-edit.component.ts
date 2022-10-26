@@ -28,7 +28,7 @@ export class RecipeEditComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id']; //id is returned as a string so you need to convert it to a anumber
       this.editMode = params['id'] != null; //check if params has an id property, if it has, there is value if not it will be null, check returns true or false
-      console.log('is edit mode ? ' + this.editMode);
+      // console.log('is edit mode ? ' + this.editMode);
       this.initForm();
       // ----- remember to synch it with the HTML you need ReactiveFormsModule in the app.module.ts
     });
@@ -89,25 +89,25 @@ export class RecipeEditComponent implements OnInit {
       })
     );
 
-    console.log(this.recipeForm);
+    // console.log(this.recipeForm);
   }
 
   onSubmit() {
   //---- alternative approach to re-naming the key: values of the ofrm to be passed correctly to create Ingredinet to 
   //---- but it requires renaming all array ingredients keys ... it is doable, requires way more code...
-    console.log(this.recipeForm);
+    // console.log(this.recipeForm);
     const ingredientList = this.recipeForm.value['ingredients']
     const[ desArray1, desArray2, desArray3, desArray4]= ingredientList
-      console.log(JSON. stringify(desArray1))
+      // console.log(JSON. stringify(desArray1))
     const {'amount-a': amount, 'name-a': name, 'unit-a': unit}= desArray1
-      console.log(amount + name + unit)
+      // console.log(amount + name + unit)
 
     let recipeIngredients = [{
       amount: amount,
       name: name, 
       unit: unit
     }]
-    console.log(recipeIngredients)
+    // console.log(recipeIngredients)
   //-----------------------------------------------------------------//
     const newRecipe = new Recipe(
       this.recipeForm.value['name-from-form'],
@@ -125,7 +125,7 @@ export class RecipeEditComponent implements OnInit {
 
     if (this.editMode){
       this.recipeService.updateRecipe(this.id, newRecipe)
-      console.log(this.recipeForm)
+      // console.log(this.recipeForm)
       // this.recipeService.updateRecipe(this.id, this.recipeForm.value)
     } else {
       this.recipeService.addRecipe(newRecipe)
