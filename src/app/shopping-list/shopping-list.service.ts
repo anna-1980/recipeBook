@@ -1,7 +1,9 @@
 // import { EventEmitter } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class ShoppingListService {
   //you have to inform the new component that new data is available ! below: (obsolete with observables introduced)
   // ingredientsChanged = new EventEmitter<Ingredient[]>();
@@ -69,10 +71,10 @@ export class ShoppingListService {
     }
     this.ingredientsLocal.push(...ingredients);
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
-    console.log('pushing ingredients' + this.ingredientsLocal);
+    // console.log('pushing ingredients' + this.ingredientsLocal);
 
     this.ingredientsChanged.next(this.ingredientsLocal.slice());
-    console.log('Changed ingredient list after pushing ingredients');
+    // console.log('Changed ingredient list after pushing ingredients');
   }
 
   updateIngredient(index: number, newIngredient: Ingredient) {
@@ -84,8 +86,8 @@ export class ShoppingListService {
   }
 
   deleteIngredient(index: number) {
-    console.log(index);
-    console.log(this.ingredientsLocal);
+    // console.log(index);
+    // console.log(this.ingredientsLocal);
     this.ingredientsLocal.splice(index, 1)
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
     this.ingredientsChanged.next(this.ingredientsLocal.slice());

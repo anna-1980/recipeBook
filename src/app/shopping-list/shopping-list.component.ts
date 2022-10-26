@@ -34,8 +34,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         this.selectedListItem = this.slService.getIngredient(index)
         // console.log(this.selectedListItem)
         });
-    console.log(this.editItem)  
-    console.log(this.slService.selectedItem)
+    // console.log(this.editItem)  
+    // console.log(this.slService.selectedItem)
   }
 
   onEditSLItem(index: number, select){

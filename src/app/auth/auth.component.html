@@ -1,13 +1,19 @@
 <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
-        <div *ngIf="error" class="alert alert-danger">
+        <!-- <div *ngIf="error" class="alert alert-danger">
             <p>{{error}}</p>
+        </div> -->
+        <div *ngIf="isAuthenticated">
+            You Account
+            <button class="btn btn-success" >Welcome: {{userDetails}}</button>
         </div>
+        <app-alert [message]="error" *ngIf="error" (close)="onCloseErrorClicked()"></app-alert>
         <div *ngIf="isLoading" style="text-align: center">
             <app-loading-spinner></app-loading-spinner>
         </div>
+        <h2>{{ !isLoggedInMode ? 'Register' :' Loggin'}}</h2>
         <form 
-        *ngIf="!isLoading"
+        *ngIf="!isLoading && !isAuthenticated"
         #authForm="ngForm"
         (ngSubmit)="onSubmit(authForm)"
         >
@@ -34,16 +40,34 @@
                 minlength="6"
                 >
             </div>
-            <div class="form-group">
-                <button 
-                class="btn btn-primary" 
-                type="submit"
-                [disabled]="!authForm.valid">{{isLoggedInMode ? 'Login' : 'Sign Up'}}</button> &nbsp;
-                <button class="btn btn-primary" type="button"
-                (click)="onSwitchMode()">{{ !isLoggedInMode ? 'Please Sign Up' :' My Account'}}</button>
+            <br>
+            <div class="form-group display-flex">
+                <div class="wrapper">
+                    <div *ngIf="button.disabled === true" class="btn hint">Please fill up the form</div>
+                    <button  
+                    class="btn btn-primary" [ngClass]="{'btn-success': !isLoggedInMode}" type="submit"
+                        #button [disabled]="!authForm.valid">{{isLoggedInMode ?
+                        'Login' : 'Sign Up'}}
+                
+                    </button>
+                </div>
+                &nbsp;
+                <div class="wrapper">
+                    <button  class="btn btn-primary" type="button" (click)="onSwitchMode()"
+                         >{{ !isLoggedInMode ? 'Back to Loggin' :' Register'}}
+                        <div class="btn hint">Don't have an account ?
+                            <br/>
+                            click to Register
+                        </div>
+                        
+                    </button>
+                </div>
             </div>
             <div class="form-group">
             </div>
+            
         </form>
+        
     </div>
 </div>
+ 

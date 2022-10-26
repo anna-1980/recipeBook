@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserModel } from './user.model';
+import { environment } from 'src/environments/environment';
 
 //to store the response from Firebase authentication sign up endpoint
 // it is a good practive to define the types of data you work with (look post response data below)
@@ -21,6 +22,8 @@ export class AuthService {
   // user = new Subject<UserModel>(); // so we emit the user whenever we login or loggout, this also stores the Token
   user = new BehaviorSubject<UserModel>(null); // additionally provides subscribes immidiate access to the previously emitted value even if there were not subscribe to it, that is why it has to be initiatd with a starter value
   // now it the dataStorage service you can reach out to get the user data
+
+  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -44,6 +47,12 @@ export class AuthService {
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
+
+      //---- here to pass the remaining time has to be calculated ----//
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      this.autoLoggout(expirationDuration);
     }
   }
 
@@ -51,7 +60,7 @@ export class AuthService {
     // return the observable to know the current state of the request, and subscribe in the component where you use it
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyArB2DLkd1wwPiqpGkTAFbHR_tu74zVSlU',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseAPIKey,
         {
           email: email,
           password: password,
@@ -98,7 +107,7 @@ export class AuthService {
   logIn(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyArB2DLkd1wwPiqpGkTAFbHR_tu74zVSlU',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+ environment.firebaseAPIKey,
         {
           email: email,
           password: password,
@@ -128,6 +137,11 @@ export class AuthService {
     const user = new UserModel(email, userId, token, expirationDate);
     this.user.next(user); // using Subject from above code user = new Subject<UserModel>();
     localStorage.setItem('userLoginData', JSON.stringify(user));
+
+    //--- auto loggout, it needs the token expiration time from here--//
+    this.autoLoggout(expiresIn * 1000);
+    // console.log(expirationDate)
+    // console.log(expiresIn)
   }
 
   private handleError(errorRes: HttpErrorResponse) {
@@ -154,6 +168,22 @@ export class AuthService {
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
-    localStorage.removeItem('userLoginData')
+    localStorage.removeItem('userLoginData');
+
+    //clearning the logoutTimer
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+    
+  }
+
+  autoLoggout(expirationDuration: number) {
+    // it will be called whenever a new User is emitted into or application
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+      // console.log('logged out');
+    }, expirationDuration);
+    console.log(this.tokenExpirationTimer);
   }
 }

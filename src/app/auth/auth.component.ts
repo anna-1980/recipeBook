@@ -15,19 +15,28 @@ export class AuthComponent implements OnInit {
   isLoggedInMode: boolean = true; //see the onSwitchMode() method below
   isLoading: boolean = false;
   error: string = null;
+  // userDetails? = null;
+  userDetails?;
+  isAuthenticated: boolean = false;
 
   constructor(private authService: AuthService, private router: Router ) { }
 
   ngOnInit(): void {
+    this.authService.user.subscribe((user)=>{
+      // console.log(user)
+      this.isAuthenticated = !user ? false : true;
+      this.userDetails = user.email
+    }) 
+    // console.log(this.userDetails)
   }
 
   onSwitchMode(){
     this.isLoggedInMode = !this.isLoggedInMode  /// change it to what it is currently NOT, so switch
-    console.log(this.isLoggedInMode)
+    // console.log(this.isLoggedInMode)
   }
 
   onSubmit(form: NgForm){
-    console.log(form.value);
+    // console.log(form.value);
     if (!form.valid) {
       return; // so that user cannot disable disablening the sign up button from the browser developer tools
     }
@@ -44,22 +53,35 @@ export class AuthComponent implements OnInit {
     } else {
       authObservables = this.authService.signUp(email, password);
     }
-    console.log(this.isLoggedInMode);
+    // console.log(this.isLoggedInMode);
 
     // one of the two observables will be sotred in let authObservables and we can share this code is the current observable state
     authObservables.subscribe(
       (responseData) => {
-        console.log(responseData);
+        // console.log(responseData);
         this.isLoading = false;
         this.router.navigate(['/recipes']) // programatic type of navigation
       },
       (errorMessageFromAuthService) => {
-        console.log(errorMessageFromAuthService);
+        // console.log(errorMessageFromAuthService);
         this.error = errorMessageFromAuthService;
         this.isLoading = false;
       }
     )
     form.reset();
   }
+
+  onCloseErrorClicked(){
+    this.error = null
+    if(this.error = 'This email addres does not exixt'){
+      this.isLoggedInMode = false
+      this.error = null
+    }
+  }
+
+  // onClick(button: HTMLButtonElement){
+  //   this.button = button
+  //   console.log(button.disabled)
+  // }
 
 }
