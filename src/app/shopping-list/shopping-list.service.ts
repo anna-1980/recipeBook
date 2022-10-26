@@ -30,10 +30,11 @@ export class ShoppingListService {
   }
 
   addIngredient(ingredient: Ingredient) {
-    this.ingredientsLocal ? this.ingredientsLocal.push(ingredient)
-    :this.ingredientsLocal.push(ingredient);
-    
-    this.ingredientsChanged.next(this.ingredientsLocal.slice());
+    this.ingredientsLocal
+      ? this.ingredientsLocal.push(ingredient)
+      : this.ingredientsLocal ===
+        JSON.parse(localStorage.getItem('ingredients'));
+
     //-----------------My LocalStorage piece----------------------------------------//
     if (this.ingredientsLocal === null) {
       // console.log('1' + this.ingredientsLocal);
@@ -50,6 +51,7 @@ export class ShoppingListService {
       unit: ingredient.unit,
     });
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
+    this.ingredientsChanged.next(this.ingredientsLocal.slice());
     // console.log('last log of ingredientsLocal');
     // console.log(this.ingredientsLocal);
     //-----------------My LocalStorage piece--------------------------------------------//
@@ -62,17 +64,20 @@ export class ShoppingListService {
     //   this.addIngredient(ingredient);
     // }
 
-    this.ingredientsLocal.push(...ingredients);
+    // this.ingredientsLocal.push(...ingredients);
 
     if (this.ingredientsLocal === null) {
       this.ingredientsLocal = [];
+      this.ingredientsLocal.push(...ingredients);
     } else {
       this.ingredientsLocal = JSON.parse(localStorage.getItem('ingredients'));
+      this.ingredientsLocal.push(...ingredients);
     }
-    this.ingredientsLocal.push(...ingredients);
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
+    
     // console.log('pushing ingredients' + this.ingredientsLocal);
-
+    
+    
     this.ingredientsChanged.next(this.ingredientsLocal.slice());
     // console.log('Changed ingredient list after pushing ingredients');
   }
@@ -88,7 +93,7 @@ export class ShoppingListService {
   deleteIngredient(index: number) {
     // console.log(index);
     // console.log(this.ingredientsLocal);
-    this.ingredientsLocal.splice(index, 1)
+    this.ingredientsLocal.splice(index, 1);
     localStorage.setItem('ingredients', JSON.stringify(this.ingredientsLocal));
     this.ingredientsChanged.next(this.ingredientsLocal.slice());
     // this.ingredientsLocal = this.ingredientsLocal.splice(index, 1)
