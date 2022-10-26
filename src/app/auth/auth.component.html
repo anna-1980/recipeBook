@@ -4,14 +4,14 @@
             <p>{{error}}</p>
         </div> -->
         <div>
-            <button class="btn btn-success" *ngIf="userDetails">Welcome: {{userDetails}}</button>
+            <button class="btn btn-success" *ngIf="isAuthenticated">Welcome: {{userDetails}}</button>
         </div>
         <app-alert [message]="error" *ngIf="error" (close)="onCloseErrorClicked()"></app-alert>
         <div *ngIf="isLoading" style="text-align: center">
             <app-loading-spinner></app-loading-spinner>
         </div>
         <form 
-        *ngIf="!isLoading && !userDetails"
+        *ngIf="!isLoading && !isAuthenticated"
         #authForm="ngForm"
         (ngSubmit)="onSubmit(authForm)"
         >
@@ -41,7 +41,8 @@
             <div class="form-group display-flex">
                 <div class="wrapper">
                     <div *ngIf="button.disabled === true" class="btn hint">Please fill up the form</div>
-                    <button  class="btn btn-primary" [ngClass]="{'btn-warning': !isLoggedInMode}" type="submit"
+                    <button  
+                    class="btn btn-primary" [ngClass]="{'btn-warning': !isLoggedInMode}" type="submit"
                         #button [disabled]="!authForm.valid">{{isLoggedInMode ?
                         'Login' : 'Sign Up'}}
                 
@@ -50,7 +51,7 @@
                 &nbsp;
                 <div class="wrapper">
                     <button title="click here to create an account" class="btn btn-primary" type="button" (click)="onSwitchMode()"
-                        *ngIf="isLoggedInMode">{{ !isLoggedInMode ? 'Please Sign Up' :' Register'}}
+                         >{{ !isLoggedInMode ? 'Back to Loggin' :' Register'}}
                         <div class="btn hint">Don't have an account ?
                             <br/>
                             click to Register
@@ -66,5 +67,4 @@
         
     </div>
 </div>
-
-<div >tip tip tip</div>
+ 

@@ -16,17 +16,18 @@ export class AuthComponent implements OnInit {
   isLoading: boolean = false;
   error: string = null;
   // userDetails? = null;
-  userDetails? = localStorage.getItem('userLoginDatagit')
+  userDetails?;
+  isAuthenticated: boolean = false;
 
   constructor(private authService: AuthService, private router: Router ) { }
 
   ngOnInit(): void {
     this.authService.user.subscribe((user)=>{
-      console.log(user.email)
+      console.log(user)
+      this.isAuthenticated = !user ? false : true;
       this.userDetails = user.email
     }) 
     console.log(this.userDetails)
-
   }
 
   onSwitchMode(){
@@ -73,5 +74,10 @@ export class AuthComponent implements OnInit {
   onCloseErrorClicked(){
     this.error = null
   }
+
+  // onClick(button: HTMLButtonElement){
+  //   this.button = button
+  //   console.log(button.disabled)
+  // }
 
 }
