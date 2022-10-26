@@ -73,6 +73,10 @@ export class AuthComponent implements OnInit {
 
   onCloseErrorClicked(){
     this.error = null
+    if(this.error = 'This email addres does not exixt'){
+      this.isLoggedInMode = false
+      this.error = null
+    }
   }
 
   // onClick(button: HTMLButtonElement){
