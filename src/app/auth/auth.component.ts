@@ -15,10 +15,18 @@ export class AuthComponent implements OnInit {
   isLoggedInMode: boolean = true; //see the onSwitchMode() method below
   isLoading: boolean = false;
   error: string = null;
+  // userDetails? = null;
+  userDetails? = localStorage.getItem('userLoginDatagit')
 
   constructor(private authService: AuthService, private router: Router ) { }
 
   ngOnInit(): void {
+    this.authService.user.subscribe((user)=>{
+      console.log(user.email)
+      this.userDetails = user.email
+    }) 
+    console.log(this.userDetails)
+
   }
 
   onSwitchMode(){
@@ -27,7 +35,7 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    console.log(form.value);
+    // console.log(form.value);
     if (!form.valid) {
       return; // so that user cannot disable disablening the sign up button from the browser developer tools
     }
